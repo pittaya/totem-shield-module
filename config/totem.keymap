@@ -11,10 +11,12 @@
 &mt {
     /* tapping-term-ms = <170>; */
 
-    quick-tap-ms = <250>;
+    quick-tap-ms = <100>;
 
     /* flavor = "hold-preferred"; */
     /* global-quick-tap; */
+
+    tapping-term-ms = <160>;
 };
 
 &lt {
@@ -50,37 +52,13 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&slt 1 LSHFT>, <&caps_word>;
+            bindings = <&none>, <&caps_word>;
         };
 
         /*   Custom mod-tap/layer-tap behavior.
         *   The main idea is to accomodate
         *   the one-shot (i.e. sticky) mods.
         */
-
-        slt: sticky_layer_tap {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-
-            /* require-prior-idle-ms = <250>; */
-
-            bindings = <&mo>, <&sk>;
-
-            display-name = "Sticky-Layer-Tap";
-        };
-
-        smt: sticky_mod_tap {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            bindings = <&kp>, <&sk>;
-
-            display-name = "Sticky-Mod-Tap";
-        };
-
         /*   Tapping the key invokes the Caps-Word
         *   behavior while holding it is used
         *   as a regular key press.
@@ -89,42 +67,12 @@
         *   is passed a dummy argument value (e.g. 0), per the 
         *   official documentation.
         */
-
-        ht_caps: hold_tap_caps {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            bindings = <&kp>, <&caps_word>;
-
-            display-name = "Caps Hold Tap";
-        };
-
         /*   CTRL -based behavior of what would normally be a plain SPACE.
         *   Implemented as nested mod-morphs. The main idea is that `space`
         *   and `comma` are among the most commonly typed characters; hence
         *   their optimized placement (again, not without some individual
         *   preferences).
         */
-
-        spc_L1: rctl_space {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&lt 2 SPACE>, <&kp COMMA>;
-
-            mods = <(MOD_RCTL)>;
-        };
-
-        spc_L0: lctl_space {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-
-            /* bindings = <&spc_L1>, <&kp COLON>; */
-
-            bindings = <&lt 2 SPACE>, <&kp COLON>;
-
-            mods = <(MOD_LCTL)>;
-        };
-
         /*   Quasi-Shift behavior for certain keys.
         *   In the traditional QWERTY layout/keyboard proper,
         *   pairs of non-alphanumeric symbols seem to be tightly coupled
@@ -132,60 +80,10 @@
         *   In ZMK, there could actually be an easier way to decouple them,
         *   and, as such, this schema is also subject to revision.
         */
-
-        s_minus: shift_minus {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp MINUS>, <&kp PLUS>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        s_dot: shift_dot {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp DOT>, <&kp GT>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        s_slash: shift_slash {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp FSLH>, <&kp LT>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        s_quote: shift_quotes {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp APOS>, <&kp GRAVE>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        ecc: esc_comma_ctl {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&mt LCTRL ESC>, <&kp COMMA>;
-
-            mods = <MOD_RCTL>;
-        };
-
         /*
         *
         *
         */
-
-        mm_ctrl_bspc: ctrl_bspc {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&mt RCTRL BSPC>, <&kp BSPC>;
-
-            mods = <MOD_LCTL>;
-            keep-mods = <MOD_LCTL>;
-        };
     };
 
     macros {
@@ -246,10 +144,10 @@
         nav_layer {
             label = "NAV";
             bindings = <
-          &trans      &kp LG(N7)  &kp LG(N8)  &kp LG(N9)  &trans    &kp DQT    &kp RA(F)  &eight_down  &eight_up  &kp RA(B)
-          &trans      &kp LG(N4)  &kp LG(N5)  &kp LG(N6)  &trans    &kp ESC    &kp LEFT   &kp DOWN     &kp UP     &kp RIGHT
-&kp EXCL  &kp LG(N0)  &kp LG(N1)  &kp LG(N2)  &kp LG(N3)  &trans    &kp COLON  &kp GT     &four_down   &four_up   &kp LT     &kp FSLH
-                                  &trans      &trans      &trans    &kp QMARK  &kp EXCL   &trans
+          &trans      &kp LG(N7)  &kp LG(N8)  &kp LG(N9)  &trans      &kp DQT    &kp RA(F)  &eight_down  &eight_up  &kp RA(B)
+          &kp LGUI    &kp LALT    &kp LCTRL   &kp LSHFT   &kp LBKT    &kp RBKT   &kp LEFT   &kp DOWN     &kp UP     &kp RIGHT
+&kp EXCL  &kp LG(N0)  &kp LG(N1)  &kp LG(N2)  &kp LG(N3)  &trans      &kp COLON  &kp GT     &four_down   &four_up   &kp LT     &kp FSLH
+                                  &trans      &trans      &trans      &kp BSPC   &kp ENTER  &trans
             >;
         };
 
@@ -258,10 +156,10 @@
         num_sym_layer {
             label = "NSL";
             bindings = <
-           &kp HASH   &kp LBKT  &kp RBKT  &kp PIPE    &kp BSLH     &kp PRCNT  &kp N7     &kp N8     &kp N9  &kp DOT
-           &kp AT     &kp LPAR  &kp RPAR  &kp AMPS    &kp ASTRK    &kp UNDER  &kp N4     &kp N5     &kp N6  &kp FSLH
-&kp MINUS  &kp CARET  &kp LBRC  &kp RBRC  &kp DOLLAR  &kp TILDE    &kp SEMI   &kp N1     &kp N2     &kp N3  &kp N0    &kp PLUS
-                                &trans    &trans      &trans       &kp RET    &kp SPACE  &kp COMMA
+           &kp LEFT_BRACE  &kp AMPS  &kp RBKT  &kp PIPE    &kp BSLH     &kp PRCNT  &kp N7     &kp N8     &kp N9  &kp DOT
+           &kp AT          &kp LPAR  &kp RPAR  &kp AMPS    &kp ASTRK    &kp UNDER  &kp N4     &kp N5     &kp N6  &kp FSLH
+&kp GRAVE  &kp CARET       &kp LBRC  &kp RBRC  &kp DOLLAR  &kp TILDE    &kp SEMI   &kp N1     &kp N2     &kp N3  &kp N0    &kp PLUS
+                                     &trans    &trans      &trans       &kp RET    &kp SPACE  &kp COMMA
             >;
         };
 
@@ -277,12 +175,12 @@
             >;
         };
 
-        layer_4 {
+        tvp1_layer {
             bindings = <
-        &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
-        &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans    &trans  &trans  &trans
+        &kp F12  &kp F7  &kp F8  &kp F9  &trans     &trans  &trans     &trans     &trans    &trans
+        &kp F11  &kp F4  &kp F5  &kp F6  &trans     &trans  &kp LSHFT  &kp LCTRL  &kp LALT  &kp LGUI
+&trans  &kp F10  &kp F1  &kp F2  &kp F3  &trans     &trans  &trans     &trans     &trans    &trans    &trans
+                         &trans  &trans  &kp TAB    &trans  &trans     &trans
             >;
         };
     };
