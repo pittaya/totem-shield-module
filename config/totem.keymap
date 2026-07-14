@@ -11,7 +11,8 @@
     /* flavor = "hold-preferred"; */
     /* global-quick-tap; */
 
-    tapping-term-ms = <160>;
+    tapping-term-ms = <180>;
+    flavor = "balanced";
 };
 
 &lt {
@@ -24,8 +25,6 @@
 
     require-prior-idle-ms = <250>;
 };
-
-&sk { quick-release; };
 
 / {
     behaviors {
@@ -83,30 +82,6 @@
 
     macros {
         /*   Easier navigation macros.  */
-
-        four_down: four_down_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_tap>, <&kp DOWN &kp DOWN &kp DOWN &kp DOWN>;
-        };
-
-        four_up: four_up_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_tap>, <&kp UP &kp UP &kp UP &kp UP>;
-        };
-
-        eight_down: eight_down_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_tap>, <&kp N8 &kp DOWN>;
-        };
-
-        eight_up: eight_up_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_tap>, <&kp N8 &kp UP>;
-        };
     };
 
     /* ---------------------------------------------------------------------------------------------------------------------------------------------------- 
